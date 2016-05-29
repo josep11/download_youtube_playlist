@@ -1,3 +1,14 @@
+import os
+
+
+def create_dir(directory):
+    home_dir = os.path.expanduser('~')
+    pathToSaveVideos = home_dir + "\\Videos\\" + directory
+
+    if not os.path.exists(pathToSaveVideos):
+        print("creating dir")
+        os.makedirs(pathToSaveVideos)
+    return pathToSaveVideos
 
 
 def write_file(dictionary, filename="output.txt"):

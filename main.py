@@ -3,18 +3,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 import mybrowser
+# import configGUI
 from myfile import write_file
 from myfile import read_file
+from myfile import create_dir
 # import pprint
 from colorama import init, Back  # ,Fore
+
 import time
 
-
-class SimpleClass(object):
-    pass
-
-videos = SimpleClass()
 init()
+
 
 urlPlayList = """https://www.youtube.com/watch?v=74Wei0-vAZs&list=PL-bTaZrTDhtb
 hxgS59t4HzwCnq2iIYMgV""".replace('\n', '')
@@ -25,7 +24,6 @@ urlBase = 'http://www.downvids.net/download-youtube-playlist-videos'
 
 browser = mybrowser.initBrowser()
 # browser = webdriver.PhantomJS()
-browser.get(urlBase)
 # browser.implicitly_wait(1)  # esperar si elements no available immediatament
 
 
@@ -66,6 +64,7 @@ def find_el_by_text(text):
 
 
 def searchPlaylist(urlPlayList):
+    browser.get(urlBase)
     searchForm = browser.find_element_by_id('home_search_q')
     submit = browser.find_element_by_id('home_search_submit')
     time.sleep(3)
@@ -74,7 +73,22 @@ def searchPlaylist(urlPlayList):
 
     submit.click()
 
-searchPlaylist(urlPlayList)
+
+def getPlaylistTitle(urlPlayList):
+    browser.get(urlPlayList)
+    try:
+        title = browser.find_element_by_xpath(
+            '//*[@id="watch-appbar-playlist"]/div/div[1]/div[1]/div[2]/h3/a'
+        ).text
+    except Exception:
+        title = 'gg'
+    else:
+        pass
+    finally:
+        pass
+
+    # print(title)
+    return title
 
 
 def printArrayElements(urls):
@@ -119,6 +133,17 @@ def extractVideoNames(trial=0):
     else:
         videoNames = list(map(lambda el: el.text, elements))
 
+
+print(configGUI.pathToSaveVideos, configGUI.urlPlayList)
+
+playlistTitle = getPlaylistTitle(configGUI.urlPlayList)
+
+pathToSaveVideos = create_dir(
+    configGUI.pathToSaveVideos + "\\" + playlistTitle
+)
+
+searchPlaylist(configGUI.urlPlayList)
+
 extractUrlToDownload()
 extractVideoNames()
 
@@ -156,4 +181,4 @@ if False:
 
 # browser.get_screenshot_as_file('prova.png')
 # time.sleep(5)
-browser.quit()
+# browser.quit()
