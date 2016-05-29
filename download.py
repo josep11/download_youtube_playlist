@@ -3,9 +3,6 @@ from urllib.request import urlretrieve
 
 videos = read_file()
 
-stri = """'THE $100 STARTUP | HOW MUCH* MONEY CAN YOU: MAKE ON YOUTUBE? |
- HOW TO START A BUSINESS WITH NO MONEY'.mp4""".replace('\n', '')
-
 reservedChars = """\ / : * ? " < > |""".split(' ')
 
 

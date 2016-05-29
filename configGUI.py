@@ -1,4 +1,3 @@
-# for Python3
 from tkinter import *
 import tkinter.messagebox
 from os.path import expanduser
@@ -19,8 +18,6 @@ class MyFirstGUI:
             width=90)
         self.label.pack()
 
-        # we have to wrap the command
-        # vcmd = master.register(self.validate)
         df = StringVar()
         df.set(
             """https://www.youtube.com/watch?v=74Wei0-vAZs&list=PL-bTaZrTDhtb
@@ -68,5 +65,3 @@ urlPlayList = my_gui.get_url()
 if not pathToSaveVideos or not urlPlayList:
     tkinter.messagebox.showinfo("ERROR", "Some field is empty")
     raise Exception("Some field is empty")
-
-# print(pathToSaveVideos, urlPlayList)

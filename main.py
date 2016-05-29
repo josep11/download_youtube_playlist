@@ -14,11 +14,9 @@ import time
 
 init()
 
-
 urlPlayList = """https://www.youtube.com/watch?v=74Wei0-vAZs&list=PL-bTaZrTDhtb
 hxgS59t4HzwCnq2iIYMgV""".replace('\n', '')
 
-# print(urlPlayList)
 urlBase = 'http://www.downvids.net/download-youtube-playlist-videos'
 
 
@@ -52,7 +50,7 @@ def find_by_xpath(locator):
             EC.presence_of_element_located((By.XPATH, locator))
         )
     except TimeoutException:
-        print(Back.RED + "TimeoutException buscant Login" + Back.BLACK)
+        print(Back.RED + "TimeoutException buscant " + locator + Back.BLACK)
         return None
     return element
 
@@ -67,8 +65,7 @@ def searchPlaylist(urlPlayList):
     browser.get(urlBase)
     searchForm = browser.find_element_by_id('home_search_q')
     submit = browser.find_element_by_id('home_search_submit')
-    time.sleep(3)
-    # submit = browser.find_element_by_xpath('//*[@id="login-form"]/div/input')
+    # time.sleep(3)
     searchForm.send_keys(urlPlayList)
 
     submit.click()
@@ -86,38 +83,20 @@ def getPlaylistTitle(urlPlayList):
         pass
     finally:
         pass
-
-    # print(title)
     return title
-
-
-def printArrayElements(urls):
-    if not len(urls):
-        print("ERROR")
-        return
-
-    print(len(urls))
-
-    for i in range(0, len(urls)):
-        print(urls[i])
 
 
 def extractUrlToDownload(trial=0):
     global urls
-    # urls = browser.find_elements_by_xpath('//*[@id="search_more"]')
-    # print("by xpath")
-    # printArrayElements(urls)
     if trial > 3:
         raise
 
-    # print("as video")
     elements = browser.find_elements_by_partial_link_text('as video')
     if not len(elements):
         trial = trial + 1
         extractUrlToDownload(trial)
     else:
         urls = list(map(lambda el: el.get_attribute('href'), elements))
-        # print('\n'.join(urls))
 
 
 def extractVideoNames(trial=0):
@@ -150,34 +129,7 @@ extractVideoNames()
 if len(videoNames) != len(urls):
     raise Exception('No sa parsejat bé els títols o les urls dels vídeos')
 
-# print('\n'.join(videoNames))
-# print('\n'.join(urls))
-
 write_file(zip(videoNames, urls))
-
-# print(list(dictionary))
-
-# print(Back.GREEN)
-# element = browser.find_element_by_css_selector(
-#     '.filters > td:nth-child(1) > input:nth-child(1)')
-# salir = browser.find_element_by_link_text('Salir')
-
-# element.send_keys('100')
-# # time.sleep(0.5)
-# element.send_keys(Keys.ENTER)
-# print(Back.BLACK)
-
-# printElement(salir)
-# printElement(element)
-
-# print '\n'.join(map(str,dir(browser)))
-if False:
-    if not browser.title:
-        print('browser title not set')
-
-    # assert 'nutrikabi' in browser.title
-
-    print(browser.title)
 
 # browser.get_screenshot_as_file('prova.png')
 # time.sleep(5)
