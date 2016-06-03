@@ -2,8 +2,9 @@ import os
 
 
 def create_dir(directory):
-    home_dir = os.path.expanduser('~')
-    pathToSaveVideos = home_dir + "\\Videos\\" + directory
+    # home_dir = os.path.expanduser('~')
+    # pathToSaveVideos = home_dir + "\\Videos\\" + directory
+    pathToSaveVideos = directory
 
     if not os.path.exists(pathToSaveVideos):
         print("creating dir")

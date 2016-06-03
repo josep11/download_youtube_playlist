@@ -3,7 +3,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 import mybrowser
-# import configGUI
+import configGUI
+from download import *
 from myfile import write_file
 from myfile import read_file
 from myfile import create_dir
@@ -113,13 +114,15 @@ def extractVideoNames(trial=0):
         videoNames = list(map(lambda el: el.text, elements))
 
 
-print(configGUI.pathToSaveVideos, configGUI.urlPlayList)
+# print(configGUI.pathToSaveVideos, configGUI.urlPlayList)
 
 playlistTitle = getPlaylistTitle(configGUI.urlPlayList)
 
 pathToSaveVideos = create_dir(
     configGUI.pathToSaveVideos + "\\" + playlistTitle
 )
+
+print(pathToSaveVideos)
 
 searchPlaylist(configGUI.urlPlayList)
 
@@ -129,8 +132,8 @@ extractVideoNames()
 if len(videoNames) != len(urls):
     raise Exception('No sa parsejat bé els títols o les urls dels vídeos')
 
-write_file(zip(videoNames, urls))
-
+# write_file(zip(videoNames, urls))
+downloadVideos(dict(zip(videoNames, urls)), pathToSaveVideos)
 # browser.get_screenshot_as_file('prova.png')
 # time.sleep(5)
 # browser.quit()
