@@ -10,9 +10,9 @@ reservedChars = """\ / : * ? " < > |""".split(' ')
 
 
 def connectProxy():
-    host = "proxy1.lafe.es"
-    port = "8080"
-    dominio = "lafe"
+    host = "hostname"
+    port = "port"
+    dominio = "domain"
     username = "internet"
     password = "internet2016"
     fullhost = dominio + "\\" + username

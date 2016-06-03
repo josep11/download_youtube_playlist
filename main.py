@@ -129,6 +129,9 @@ searchPlaylist(configGUI.urlPlayList)
 extractUrlToDownload()
 extractVideoNames()
 
+#  TODO TEST
+browser.quit()
+
 if len(videoNames) != len(urls):
     raise Exception('No sa parsejat bé els títols o les urls dels vídeos')
 
