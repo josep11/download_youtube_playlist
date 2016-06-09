@@ -72,6 +72,7 @@ def downloadVideos(videos, rootPath=None):
 
     def downlFile(url, saveFile, report):
         req.urlretrieve(url, saveFile, reporthook=report)
+        print()
         return 0
 
     if not rootPath:
@@ -83,8 +84,8 @@ def downloadVideos(videos, rootPath=None):
 
     for key, value in sorted(videos.items()):
         # print("%s, %s\n" % (key, value))
-        # fileName = slugify(cleanFileName(key))
-        fileName = key
+        fileName = slugify(cleanFileName(key))
+        # fileName = key
         print("Downloading file %s.mp4 ..." % fileName)
 
         fullFileName = rootPath + "\\" + fileName + ".mp4"

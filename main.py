@@ -135,7 +135,7 @@ browser.quit()
 if len(videoNames) != len(urls):
     raise Exception('No sa parsejat bé els títols o les urls dels vídeos')
 
-# write_file(zip(videoNames, urls))
+write_file(zip(videoNames, urls))
 downloadVideos(dict(zip(videoNames, urls)), pathToSaveVideos)
 # browser.get_screenshot_as_file('prova.png')
 # time.sleep(5)
