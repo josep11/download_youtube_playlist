@@ -1,9 +1,11 @@
 from myfile import read_file
 import urllib.request
 import urllib.request as req
-import re
+import unicodedata
 import sys
-
+import os.path
+from urllib.error import URLError, HTTPError
+import urllib.parse
 # in case we read the videos from the text file
 
 
@@ -43,6 +45,14 @@ def cleanFileName(name):
     return name
 
 
+def slugify(s):
+    return ''.join((c for c in unicodedata.normalize('NFD', s)
+                    if unicodedata.category(c) != 'Mn'))
+    # NFD stands for Normal Form Decomposed
+    # value = unicodedata.normalize('NFKD', value).encode('ASCII', 'ignore')
+    # return value.decode('UTF-8')
+
+
 def downloadVideos(videos, rootPath=None):
     # try:
     #     pass
@@ -50,36 +60,36 @@ def downloadVideos(videos, rootPath=None):
     #     raise
     def report(count, blockSize, totalSize):
         percent = int(count * blockSize * 100 / totalSize)
-        sys.stdout.write("\r%d%%" % percent + ' complete')
+        # sys.stdout.write('\r')
+        tantXBarra = 100 / 40
+
+        sys.stdout.write("\r[%-40s] %d%%" %
+                         ('=' * int(percent / tantXBarra), percent))
         sys.stdout.flush()
 
         # http://snipplr.com/view/72137/display-the-download-percentage-of-a-file/
-        urllib.urlretrieve(getFile, saveFile, reporthook=report)
-        sys.stdout.write("\rDownload complete, saved as %s" %
-                         (fileName) + '\n\n')
+        # urllib.urlretrieve(url, saveFile, reporthook=report)
 
-        sys.stdout.flush()
+    def downlFile(url, saveFile, report):
+        req.urlretrieve(url, saveFile, reporthook=report)
+        return 0
 
-    def downlFile(getFile, saveFile, report):
-        pass
-
-    # connectProxy()
     if not rootPath:
-        from os.path import expanduser
-        home_dir = expanduser('~')
+        home_dir = os.path.expanduser('~')
         rootPath = home_dir + "\\Videos"
 
     print('\n' + "Downloading", len(videos),
           "videos in folder: " + rootPath + '\n')
 
-    for key, value in videos.items():
+    for key, value in sorted(videos.items()):
         # print("%s, %s\n" % (key, value))
-        fileName = cleanFileName(key)
-        print("Downloading file %r.mp4 ..." % fileName)
+        # fileName = slugify(cleanFileName(key))
+        fileName = key
+        print("Downloading file %s.mp4 ..." % fileName)
+
+        fullFileName = rootPath + "\\" + fileName + ".mp4"
         try:
-            req.urlretrieve(value,
-                            rootPath + "\\" + fileName + ".mp4",
-                            reporthook=report)
+            downlFile(value, fullFileName, report)
         except urllib.error.HTTPError as err:
             print(err.code)
         except:

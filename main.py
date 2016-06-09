@@ -79,11 +79,11 @@ def getPlaylistTitle(urlPlayList):
             '//*[@id="watch-appbar-playlist"]/div/div[1]/div[1]/div[2]/h3/a'
         ).text
     except Exception:
-        title = 'gg'
-    else:
-        pass
-    finally:
-        pass
+        try:
+            title = browser.find_element_by_css_selector(
+                'div.yt-uix-inlineedit-view-container > h1')
+        except Exception:
+            title = 'download'
     return title
 
 

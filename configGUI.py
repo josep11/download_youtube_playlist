@@ -20,8 +20,8 @@ class MyFirstGUI:
 
         df = StringVar()
         df.set(
-            """https://www.youtube.com/watch?v=74Wei0-vAZs&list=PL-bTaZrTDhtb
-hxgS59t4HzwCnq2iIYMgV""")
+            """https://www.youtube.com/playlist?list=PLV8ixeX3qFzIkjXW_GpiV1hi_
+0ISnG8fA""")
         self.url = Entry(
             frame, validate="key", width=90, textvariable=df)
         # , validatecommand=(vcmd, '%P'))
